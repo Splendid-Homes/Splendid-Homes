@@ -1,0 +1,57 @@
+{
+  "name": "website-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "seed": "cross-env NODE_OPTIONS=--no-deprecation payload run src/seed.ts",
+    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@opennextjs/cloudflare": "^1.20.16",
+    "@payloadcms/db-d1-sqlite": "^3.92.1",
+    "@payloadcms/email-resend": "^3.92.1",
+    "@payloadcms/next": "^3.92.1",
+    "@payloadcms/plugin-import-export": "^3.92.1",
+    "@payloadcms/richtext-lexical": "^3.92.1",
+    "@payloadcms/storage-r2": "^3.92.1",
+    "@payloadcms/ui": "^3.92.1",
+    "graphql": "^16.14.2",
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.27",
+    "motion": "^14.4.0",
+    "next": "16.4.5",
+    "payload": "^3.92.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "cross-env": "^7.0.3",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.5",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "wrangler": "^4.157.0"
+  },
+  "allowScripts": {
+    "esbuild@0.18.20": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.2": true,
+    "workerd@1.20261019.1": true
+  },
+  "overrides": {
+    "dompurify": "3.4.17"
+  }
+}

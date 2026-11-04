@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Production site (the prototype stays on the separate "splendid-homes" Worker).
+  "name": "splendid-homes-site",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  // database_id is filled in when the D1 database is created at deploy time (Phase 10).
+  "d1_databases": [{ "binding": "D1", "database_name": "splendid-homes", "database_id": "00000000-0000-0000-0000-000000000000" }],
+  "r2_buckets": [{ "binding": "R2", "bucket_name": "splendid-homes-media" }]
+}
