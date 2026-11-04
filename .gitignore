@@ -45,5 +45,11 @@ next-env.d.ts
 .open-next/
 !.env.example
 
+# AI coding tool files stay local
+/AGENTS.md
+/CLAUDE.md
+/.claude/
+/.mcp.json
+
 # Design mockups and review screenshots stay local
 /docs/mockups/

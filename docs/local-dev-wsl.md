@@ -28,7 +28,6 @@ wsl -d Ubuntu -- "/mnt/d/client projects/website/website-app/scripts/wsl.sh" bui
 | `wsl.sh start` | Serve the last build on port 3100; open http://localhost:3100 in Windows |
 | `wsl.sh <script>` | Sync, then any npm script, e.g. `wsl.sh migrate`, `wsl.sh seed`, `wsl.sh generate:types` |
 
-In Claude Code's preview, the `site-wsl` launch configuration runs `wsl.sh start`.
 
 ## Notes
 
