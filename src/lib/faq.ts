@@ -68,11 +68,11 @@ export function propertyFaqs(p: Property, c: Community | undefined, agent: Agent
   faqs.push(
     {
       q: 'How do I book a viewing?',
-      a: `Use "Book a viewing" on this page to pick a day and time, or message ${agent.name} (BRN ${agent.brn}) on WhatsApp. Viewings run Monday to Saturday and we confirm by phone.`,
+      a: `Use "Book a viewing" on this page to pick a day and time, or message ${agent.brn ? `${agent.name} (BRN ${agent.brn})` : agent.name} on WhatsApp. Viewings run Monday to Saturday and we confirm by phone.`,
     },
     {
       q: 'Is this listing verified?',
-      a: `Yes. It is advertised under Dubai Land Department permit ${p.permit} with reference ${p.ref}, and handled by RERA-registered broker ${agent.name} (BRN ${agent.brn}).`,
+      a: `Yes. It is advertised under Dubai Land Department permit ${p.permit} with reference ${p.ref}, and handled by ${agent.brn ? `RERA-registered broker ${agent.name} (BRN ${agent.brn})` : agent.name}.`,
     },
   );
   return faqs;

@@ -10,6 +10,7 @@ export const ABOUT_TEAM_DEFAULTS = {
   valuesTitle: 'What we', valuesItalic: 'stand for',
   leadEyebrow: 'Leadership', leadTitle: 'The people behind', leadItalic: 'Splendid', leadLink: 'Meet the full team',
   // Team page and cards
+  agentsSoon: 'You will find our agents\' info soon.',
   allLanguages: 'All languages', cardWhatsapp: 'WhatsApp', cardMessage: 'Hi {first}, I found you on the Splendid Homes website.',
   // Agent profile
   labelBrn: 'RERA BRN', labelLanguages: 'Languages', labelAreas: 'Specialist areas', labelDeals: 'Closed deals',

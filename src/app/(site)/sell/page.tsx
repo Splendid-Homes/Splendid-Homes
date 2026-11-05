@@ -42,7 +42,7 @@ export default async function SellPage() {
               </li>
             ))}
           </ol>
-          {S.showStats && <dl className="grid grid-cols-2 gap-5">
+          {S.showStats && site.showFigures && <dl className="grid grid-cols-2 gap-5">
             {stats.map(([v, l]) => (
               <div key={l} className="flex flex-col-reverse">
                 <dt className="text-[0.85rem] font-semibold text-muted">{l}</dt>

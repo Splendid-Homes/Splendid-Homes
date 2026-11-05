@@ -5,10 +5,20 @@ import type { Content } from './cms';
  * Lookups over a content snapshot from the CMS (see lib/cms.ts → `data()`).
  * Pure functions: safe to import from client components (no Payload code is pulled in).
  */
+/** Where an agent's name links: their profile, or the contact page for the company itself. */
+export const agentHref = (a: Agent) => (a.slug ? `/team/${a.slug}` : '/contact');
+/** How to greet them in a message: first name, or the whole company name. */
+export const agentFirst = (a: Agent) => (a.slug ? a.name.split(' ')[0] : a.name);
+
 export function db(c: Content) {
+  /** Stands in on listings and articles while no agent is published (no profile, BRN or photo of a person). */
+  const company: Agent = {
+    slug: '', id: 'company', name: c.site.name, title: 'Property advisors', img: '/icon.svg', languages: [], brn: '',
+    phone: c.site.phone, email: c.site.email, specialties: [], deals: 0, bio: '', linkedin: '', instagram: '',
+  };
   const communityBySlug = (slug: string): Community | undefined => c.communities.find(x => x.slug === slug);
   const developerBySlug = (slug: string) => c.developers.find(d => d.slug === slug);
-  const agentById = (id: string): Agent => c.agents.find(a => a.id === id) ?? c.agents[0];
+  const agentById = (id: string): Agent => c.agents.find(a => a.id === id) ?? c.agents[0] ?? company;
   const publishedProperties = () => c.properties;
   const liveProjects = () => c.projects;
   const allPosts = () => [...c.posts].sort((a, b) => b.date.localeCompare(a.date));

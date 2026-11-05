@@ -27,14 +27,14 @@ export async function WhySection() {
           <SplitHeading id="why-title" segments={titleSegments(copy)}
             className="mb-4 text-[clamp(1.7rem,3vw,2.6rem)]" />
           {copy.intro && <p className="max-w-[46ch] text-[1.05rem] text-ink-2">{copy.intro}</p>}
-          <dl className="mt-7 grid max-w-[460px] grid-cols-2 gap-3.5">
+          {site.showFigures && <dl className="mt-7 grid max-w-[460px] grid-cols-2 gap-3.5">
             {stats.map(([v, l]) => (
               <div key={l} className="flex flex-col-reverse rounded-[20px] soft-inset-sm p-[18px]">
                 <dt className="text-[0.84rem] font-bold tracking-[0.03em] text-muted">{l}</dt>
                 <dd className="text-[clamp(1.9rem,3vw,2.5rem)] font-extrabold leading-[1.1] tracking-[-0.03em] text-forest"><CountUp value={v} /></dd>
               </div>
             ))}
-          </dl>
+          </dl>}
           <Link href="/contact" className="mt-7 inline-flex items-center gap-2 rounded-full bg-forest px-6 py-3.5 text-[0.92rem] font-bold text-white shadow-btn transition hover:brightness-110">
             Talk to an advisor <Icon name="arrow" className="size-4" />
           </Link>

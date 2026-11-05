@@ -38,6 +38,7 @@ export const AboutTeam: GlobalConfig = {
           admin: { description: 'Pick and order the people. Leave empty to show the first four in the team order.' } },
       ] },
       { label: 'Team page & cards', fields: [
+        t('agentsSoon', 'Text shown while no agent is published'),
         row(t('allLanguages', '"All languages" filter'), t('cardWhatsapp', 'Card WhatsApp button')),
         t('cardMessage', 'Card: pre-filled WhatsApp message ({first})'),
       ] },

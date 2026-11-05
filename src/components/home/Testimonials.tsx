@@ -12,7 +12,7 @@ import { sectionCopy, titleSegments } from '@/lib/homeCopy';
  */
 export async function Testimonials() {
   const copy = await sectionCopy('testimonials');
-  const { testimonials } = (await data()).c;
+  const { c: { testimonials }, site } = await data();
   if (!testimonials.length) return null;
   return (
     <section aria-labelledby="testi-title" className="cv-auto bg-mist py-[clamp(56px,8vw,110px)]">
@@ -23,13 +23,13 @@ export async function Testimonials() {
             <SplitHeading id="testi-title" segments={titleSegments(copy)}
               className="text-[clamp(1.7rem,3vw,2.6rem)]" />
           </div>
-          <div className="inline-flex items-center gap-2.5 rounded-full soft-raised-sm px-[18px] py-2.5">
+          {site.showFigures && <div className="inline-flex items-center gap-2.5 rounded-full soft-raised-sm px-[18px] py-2.5">
             <b className="text-[1.4rem]">4.9</b>
             <span className="flex gap-0.5 text-star" role="img" aria-label="5 out of 5 stars">
               {Array.from({ length: 5 }, (_, i) => <Icon key={i} name="star" className="size-4 fill-current" />)}
             </span>
             <span className="text-[0.82rem] text-muted">1,200+ Google reviews</span>
-          </div>
+          </div>}
         </div>
         <ReviewFilter items={testimonials} />
       </div>

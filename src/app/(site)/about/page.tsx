@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { AgentCard } from '@/components/cards/AgentCard';
+import { AgentsSoon } from '@/components/ui/AgentsSoon';
 import { Icon, type IconName } from '@/components/icons';
 import { CmsPageHero } from '@/components/layout/CmsPageHero';
 import { ClipReveal } from '@/components/motion/ClipReveal';
@@ -49,7 +50,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {AT.showStats && <section aria-label="Splendid Homes in numbers" className="wrap">
+      {AT.showStats && SITE.showFigures && <section aria-label="Splendid Homes in numbers" className="wrap">
         <dl className="grid grid-cols-2 gap-3 rounded-[26px] soft-inset p-2.5 lg:grid-cols-4">
           {stats.map(([v, l]) => (
             <div key={l} className="flex flex-col-reverse gap-1 rounded-[18px] soft-raised-sm px-6 py-6">
@@ -76,9 +77,9 @@ export default async function AboutPage() {
       <section aria-labelledby="leadership" className="cv-auto bg-mist py-[clamp(48px,7vw,96px)]">
         <div className="wrap">
           <SectionHead id="leadership" eyebrow={T.leadEyebrow} title={[{ text: T.leadItalic ? `${T.leadTitle} ` : T.leadTitle }, ...(T.leadItalic ? [{ text: T.leadItalic, em: true }] : [])]} link="/team" linkLabel={T.leadLink} />
-          <ClipReveal as="ul" className="grid gap-[clamp(18px,2.4vw,30px)] [grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr))]">
+          {leaders.length ? <ClipReveal as="ul" className="grid gap-[clamp(18px,2.4vw,30px)] [grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr))]">
             {leaders.map(a => <li key={a.id}><AgentCard a={a} /></li>)}
-          </ClipReveal>
+          </ClipReveal> : <AgentsSoon />}
         </div>
       </section>
 

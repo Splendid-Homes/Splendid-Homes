@@ -10,8 +10,8 @@ import { everyMinute, openNow } from '@/lib/hours';
  * client proof from Site settings. Screen readers get the plain headline; reduced motion
  * keeps the word still.
  */
-export function CtaHook({ hours, clients, sold, faces, text: T, words: WORDS }: {
-  hours: string; clients: string; sold: string; faces: string[];
+export function CtaHook({ hours, clients, sold, showFigures, faces, text: T, words: WORDS }: {
+  hours: string; clients: string; sold: string; showFigures: boolean; faces: string[];
   text: { ctaTitle: string; ctaItalic: string; ctaOpen: string; ctaClosed: string; ctaDefault: string; ctaTrust: string }; words: string[];
 }) {
   const [i, setI] = useState(0);
@@ -45,14 +45,14 @@ export function CtaHook({ hours, clients, sold, faces, text: T, words: WORDS }: 
           ))}
         </span>
       </h2>
-      <div className="flex flex-wrap items-center gap-3 text-ink-2">
-        <span className="flex rounded-full soft-inset-sm p-1">
+      {showFigures && <div className="flex flex-wrap items-center gap-3 text-ink-2">
+        {faces.length > 0 && <span className="flex rounded-full soft-inset-sm p-1">
           {faces.map((src, n) => (
             <Image key={src} src={src} alt="" width={32} height={32} className={`size-8 rounded-full border-2 border-mist object-cover ${n ? '-ml-2.5' : ''}`} />
           ))}
-        </span>
+        </span>}
         <span>{T.ctaTrust.split(/(\{clients\}|\{sold\})/).map((bit, n) => bit === '{clients}' ? <b key={n} className="text-ink">{clients}</b> : bit === '{sold}' ? <b key={n} className="text-ink">{sold}</b> : bit)}</span>
-      </div>
+      </div>}
     </div>
   );
 }

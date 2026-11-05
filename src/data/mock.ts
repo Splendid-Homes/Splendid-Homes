@@ -1600,6 +1600,7 @@ export const careers: Career[] = [
 
 export const settings: SiteSettings = {
   "company": "Splendid Homes Real Estate L.L.C",
+  "showFigures": false,
   "orn": "00000",
   "tagline": "Dubai's house of splendid living",
   "phone": "+971 4 000 0000",

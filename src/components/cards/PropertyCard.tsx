@@ -9,7 +9,7 @@ import { EnquireButton } from '@/components/ui/EnquireButton';
 import { SaveButton } from '@/components/ui/SaveButton';
 import type { Property } from '@/data/types';
 import { data } from '@/lib/cms';
-import { bedsLabel, num } from '@/lib/data';
+import { agentFirst, agentHref, bedsLabel, num } from '@/lib/data';
 import type { Match } from '@/lib/similar';
 import { waHref } from '@/lib/site';
 
@@ -85,11 +85,11 @@ export async function PropertyCard({ p, preload, wide, match }: { p: Property; p
           </ul>
         )}
         <div className="relative z-[2] mt-auto flex items-center justify-between gap-2 rounded-[14px] soft-raised-sm p-2 pt-2">
-          <Link href={`/team/${agent.slug}`} className="flex min-w-0 items-center gap-2 text-[0.8rem] font-bold hover:text-forest">
+          <Link href={agentHref(agent)} className="flex min-w-0 items-center gap-2 text-[0.8rem] font-bold hover:text-forest">
             <Image src={agent.img} alt="" width={28} height={28} className="size-7 shrink-0 rounded-full object-cover" /><span className="truncate">{agent.name}</span>
           </Link>
           <EnquireButton info={{ propertyId: p.id, title: p.title, ref: p.ref, agentName: agent.name }} className="ml-auto" />
-          <a href={waHref(agent.phone, `Hi ${agent.name.split(' ')[0]}, I'm interested in ${p.title} (ref ${p.ref}).`)} target="_blank" rel="noopener"
+          <a href={waHref(agent.phone, `Hi ${agentFirst(agent)}, I'm interested in ${p.title} (ref ${p.ref}).`)} target="_blank" rel="noopener"
             aria-label={`WhatsApp ${agent.name} about ${p.title}`}
             className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#127A3F] px-3 py-1.5 text-[0.74rem] font-bold text-white shadow-btn transition hover:brightness-110">
             <Icon name="wa" className="size-3.5" />WhatsApp

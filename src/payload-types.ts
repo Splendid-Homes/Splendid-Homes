@@ -1933,6 +1933,7 @@ export interface Setting {
     tiktok?: string | null;
     facebook?: string | null;
   };
+  showFigures?: boolean | null;
   stats: {
     years: number;
     sold: string;
@@ -2778,6 +2779,7 @@ export interface AboutTeam {
    * Pick and order the people. Leave empty to show the first four in the team order.
    */
   leaders?: (number | Agent)[] | null;
+  agentsSoon?: string | null;
   allLanguages?: string | null;
   cardWhatsapp?: string | null;
   cardMessage?: string | null;
@@ -3416,6 +3418,7 @@ export interface SettingsSelect<T extends boolean = true> {
         tiktok?: T;
         facebook?: T;
       };
+  showFigures?: T;
   stats?:
     | T
     | {
@@ -4005,6 +4008,7 @@ export interface AboutTeamSelect<T extends boolean = true> {
   leadItalic?: T;
   leadLink?: T;
   leaders?: T;
+  agentsSoon?: T;
   allLanguages?: T;
   cardWhatsapp?: T;
   cardMessage?: T;

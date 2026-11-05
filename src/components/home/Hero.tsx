@@ -34,7 +34,7 @@ export async function Hero() {
     <section aria-labelledby="hero-title" className="bg-gradient-to-b from-white to-mist pb-[clamp(30px,4vw,60px)] pt-[clamp(24px,4vw,48px)]">
       <HeroMotion className="wrap grid items-center gap-[clamp(30px,4vw,60px)] lg:grid-cols-[1.05fr_1fr]">
         <div data-hero-copy>
-          {cards.badge && (
+          {site.showFigures && cards.badge && (
             <p data-hero-fade className="mb-[22px] inline-flex items-center gap-2 rounded-full soft-inset-sm py-1.5 pl-1.5 pr-4 text-[0.82rem] font-bold text-forest">
               <span className="grid size-7 place-items-center rounded-full soft-raised-sm"><Icon name="star" className="size-3.5 fill-star text-star" /></span> {cards.badge}
             </p>
@@ -83,7 +83,7 @@ export async function Hero() {
                 </p>
               </>
             )}
-            {cards.showExperts && <div className={`${glass} bottom-5 right-5 flex max-w-[calc(100%-40px)] items-center gap-3 pr-5 sm:bottom-7 sm:right-7`}>
+            {site.showFigures && cards.showExperts && agents.length > 0 && <div className={`${glass} bottom-5 right-5 flex max-w-[calc(100%-40px)] items-center gap-3 pr-5 sm:bottom-7 sm:right-7`}>
               <span className="flex">
                 {agents.slice(0, 4).map((a, i) => (
                   <Image key={a.id} src={a.img} alt="" width={36} height={36}

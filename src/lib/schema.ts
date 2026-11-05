@@ -93,7 +93,7 @@ export function listingJsonLd(p: Property, c: Community | undefined, agent: Agen
       offeredBy: { '@id': ORG_ID },
     },
     provider: { '@id': ORG_ID },
-    author: {
+    author: !agent.slug ? { '@id': ORG_ID } : {
       '@type': 'Person',
       name: agent.name,
       jobTitle: agent.title,
@@ -202,7 +202,7 @@ export function blogPostingJsonLd(a: {
     wordCount: a.words,
     inLanguage: 'en-AE',
     isAccessibleForFree: true,
-    author: {
+    author: !a.author.slug ? { '@id': ORG_ID } : {
       '@type': 'Person',
       name: a.author.name,
       jobTitle: a.author.title,

@@ -16,7 +16,7 @@ import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
 import { FaqBlock } from '@/components/seo/FaqBlock';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { StatSource } from '@/components/seo/StatSource';
-import { num } from '@/lib/data';
+import { agentFirst, agentHref, num } from '@/lib/data';
 import { extrasFor, modifiedDate, readingMinutes, wordCount } from '@/lib/insights';
 import { fmtDate } from '@/lib/market';
 import { blogPostingJsonLd } from '@/lib/schema';
@@ -65,11 +65,11 @@ export default async function ArticlePage({ params }: PageProps<'/insights/[slug
         <SplitHeading as="h1" trigger="load" segments={[{ text: p.title }]} className="mb-4 text-[clamp(1.9rem,4.2vw,3.1rem)] leading-[1.1]" />
         <p className="mb-6 text-[1.15rem] text-ink-2">{p.excerpt}</p>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3 border-y border-line py-4">
-          <Link href={`/team/${a.slug}`} className="group flex items-center gap-3">
+          <Link href={agentHref(a)} className="group flex items-center gap-3">
             <Image src={a.img} alt="" width={44} height={44} className="size-11 rounded-full object-cover" />
             <span>
               <span className="block font-bold transition-colors group-hover:text-forest">{a.name}</span>
-              <span className="block text-[0.84rem] text-muted">{a.title} · BRN {a.brn}</span>
+              <span className="block text-[0.84rem] text-muted">{a.brn ? `${a.title} · BRN ${a.brn}` : a.title}</span>
             </span>
           </Link>
           <dl className="flex gap-6 text-[0.84rem]">
@@ -202,7 +202,7 @@ export default async function ArticlePage({ params }: PageProps<'/insights/[slug
 
           {x?.faqs && <FaqBlock id="article-faq" faqs={x.faqs} title={T.faqTitle} className="mt-10 leading-normal" />}
 
-          <section aria-labelledby="author" className="mt-10 flex flex-col gap-5 rounded-[26px] soft-raised p-6 leading-normal sm:flex-row">
+          {a.slug && <section aria-labelledby="author" className="mt-10 flex flex-col gap-5 rounded-[26px] soft-raised p-6 leading-normal sm:flex-row">
             <Image src={a.img} alt={a.name} width={88} height={88} className="size-[88px] shrink-0 rounded-full object-cover" />
             <div>
               <h2 id="author" className="mb-0.5 text-[0.8rem] font-bold uppercase tracking-[0.12em] text-muted">{T.aboutAuthor}</h2>
@@ -211,13 +211,13 @@ export default async function ArticlePage({ params }: PageProps<'/insights/[slug
               <p className="mb-3 text-[0.95rem] text-ink-2">{a.bio}</p>
               <Link href={`/team/${a.slug}`} className="inline-flex items-center gap-1.5 font-bold text-forest">{T.viewProfile} <Icon name="arrow" className="size-4" /></Link>
             </div>
-          </section>
+          </section>}
         </div>
 
         {I.formShow && (
           <aside aria-label={`Speak to ${a.name}`} className="lg:sticky lg:top-[104px] lg:self-start">
             <div className="rounded-[28px] soft-raised p-[22px]">
-              <EnquiryForm type="callback" subject={`Article: ${p.title}`} propertyRef={p.title} title={T.formTitle.replaceAll('{first}', a.name.split(' ')[0])} cta={T.formCta}
+              <EnquiryForm type="callback" subject={`Article: ${p.title}`} propertyRef={p.title} title={T.formTitle.replaceAll('{first}', agentFirst(a))} cta={T.formCta}
                 message={T.formMessage.replaceAll('{title}', p.title)} />
             </div>
           </aside>

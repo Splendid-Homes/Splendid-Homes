@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { AgentCard } from '@/components/cards/AgentCard';
+import { AgentsSoon } from '@/components/ui/AgentsSoon';
 import { CmsPageHero } from '@/components/layout/CmsPageHero';
 import { ResultsSkeleton } from '@/components/listings/ResultsSkeleton';
 import { JsonLd } from '@/components/seo/JsonLd';
@@ -15,7 +16,7 @@ export async function generateMetadata() {
   const LANGS = await languages();
   return cmsPageMetadata('team', {
     title: 'Our Team: RERA-Registered Property Consultants',
-    description: `Meet the Splendid Homes team: RERA-registered consultants in Dubai speaking ${LANGS.join(', ')}. Find a specialist by language and area.`,
+    description: LANGS.length ? `Meet the Splendid Homes team: RERA-registered consultants in Dubai speaking ${LANGS.join(', ')}. Find a specialist by language and area.` : 'Meet the Splendid Homes team of property consultants in Dubai.',
     path: '/team',
     image: communities[1].img,
   });
@@ -31,7 +32,7 @@ export default async function TeamPage({ searchParams }: PageProps<'/team'>) {
     <>
       <CmsPageHero page="team" eyebrow="Our people" img={communities[1].img} alt="Downtown Dubai skyline"
         title={[{ text: 'Meet the ' }, { text: 'team', em: true }]}
-        sub={`RERA-registered specialists speaking ${LANGS.length} languages, each with a broker registration number (BRN) you can verify.`}
+        sub={LANGS.length ? `RERA-registered specialists speaking ${LANGS.length} languages, each with a broker registration number (BRN) you can verify.` : ''}
         crumbs={[{ name: 'Home', href: '/' }, { name: 'Team', href: '/team' }]} />
       <section aria-label="Team members" className="wrap py-[clamp(36px,5vw,64px)]">
         <Suspense fallback={<ResultsSkeleton filterClass="h-10 max-w-[620px] !rounded-full !border-0 bg-mist mb-8" head={false} />}>
@@ -46,6 +47,7 @@ async function Members({ searchParams }: { searchParams: SP }) {
   const LANGS = await languages();
   const __d = await data();
   const { agents } = __d.c;
+  if (!agents.length) return <AgentsSoon />;
   const raw = (await searchParams).lang;
   const lang = LANGS.find(l => l === (Array.isArray(raw) ? raw[0] : raw));
   const list = agents.filter(a => !lang || a.languages.includes(lang));

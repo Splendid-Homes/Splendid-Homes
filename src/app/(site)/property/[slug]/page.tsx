@@ -185,7 +185,7 @@ export default async function PropertyPage({ params }: PageProps<'/property/[slu
               <section id="regulatory" aria-labelledby="regulatory-title" className={`${sec} rounded-[26px] soft-inset p-[clamp(14px,2vw,20px)]`}>
                 <h2 id="regulatory-title" className={`${h2} px-2 pt-1`}>{fill(T.regulatoryTitle)}</h2>
                 <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {[[T.regPermit, p.permit], [T.regRef, p.ref], [T.regBrn, agent.brn], [T.regOrn, SITE.orn]].map(([k, v]) => (
+                  {[[T.regPermit, p.permit], [T.regRef, p.ref], [T.regBrn, agent.brn], [T.regOrn, SITE.orn]].filter(([, v]) => v).map(([k, v]) => (
                     <div key={k} className="rounded-[16px] soft-raised-sm px-4 py-3">
                       <dt className="text-[0.72rem] font-extrabold uppercase tracking-[0.06em] text-muted">{k}</dt>
                       <dd className="font-bold tabular-nums">{v}</dd>

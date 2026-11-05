@@ -33,7 +33,7 @@ export async function Footer() {
       <div className="wrap">
         {/* Call to action (soft UI): headline and proof on the left, three ways to get in touch in a pressed-in tray. */}
         <div className="relative z-[1] -mb-[60px] mt-[clamp(40px,6vw,80px)] grid items-center gap-[clamp(20px,3vw,32px)] rounded-[36px] bg-mist p-[clamp(22px,3.4vw,42px)] shadow-[0_30px_60px_-30px_rgba(15,36,24,.45),-6px_-6px_14px_#fff] lg:grid-cols-[1fr_1.2fr]">
-          <CtaHook hours={SITE.hours} clients={SITE.stats.clients} sold={SITE.stats.sold} faces={agents.slice(0, 4).map(a => a.img)} text={T} words={SITE.menus.ctaWords} />
+          <CtaHook hours={SITE.hours} clients={SITE.showFigures ? SITE.stats.clients : ''} sold={SITE.showFigures ? SITE.stats.sold : ''} showFigures={SITE.showFigures} faces={agents.slice(0, 4).map(a => a.img)} text={T} words={SITE.menus.ctaWords} />
           <ul className="grid gap-3 rounded-[28px] soft-inset p-2.5 sm:grid-cols-3">
             {ways(SITE).map(w => (
               <li key={w.title}>

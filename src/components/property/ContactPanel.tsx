@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Icon } from '@/components/icons';
 import type { Agent } from '@/data/types';
 import { data } from '@/lib/cms';
+import { agentHref } from '@/lib/data';
 import { telHref, waHref } from '@/lib/site';
 import { EnquiryForm } from './EnquiryForm';
 import { ViewingButton } from './ModalTriggers';
@@ -17,12 +18,12 @@ export async function ContactPanel({ agent, propertyRef, propertyId, waText, tex
   const btn = 'inline-flex items-center justify-center gap-2 rounded-full px-4 py-3 text-[0.9rem] font-bold transition';
   return (
     <div className="flex flex-col gap-4 rounded-[28px] soft-raised p-[22px]">
-      <Link href={`/team/${agent.slug}`} className="group flex items-center gap-3.5">
+      <Link href={agentHref(agent)} className="group flex items-center gap-3.5">
         <Image src={agent.img} alt="" width={60} height={60} className="size-[60px] rounded-full object-cover" />
         <span className="min-w-0">
           <b className="block transition-colors group-hover:text-forest">{agent.name}</b>
           <span className="block text-[0.84rem] text-muted">{agent.title}</span>
-          <small className="block text-[0.76rem] text-muted">BRN {agent.brn} · {agent.languages.join(', ')}</small>
+          {agent.brn && <small className="block text-[0.76rem] text-muted">BRN {agent.brn} · {agent.languages.join(', ')}</small>}
         </span>
       </Link>
       <ViewingButton className={`${btn} w-full bg-forest py-3.5 text-white shadow-btn hover:brightness-110`}>

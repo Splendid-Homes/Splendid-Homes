@@ -209,6 +209,7 @@ export interface SiteSettings {
     heroVideo?: string;
     sections: Record<string, boolean>;
   };
+  showFigures: boolean;
   stats: { years: number; sold: string; clients: string; agents: number };
   feeds: Record<string, boolean>;
   seo: { page: string; title: string; desc: string }[];
@@ -229,6 +230,7 @@ export interface Site {
   geo: { lat: number; lng: number };
   socials: Record<'instagram' | 'linkedin' | 'youtube' | 'tiktok' | 'facebook', string>;
   googleBusinessProfile: string;
+  showFigures: boolean;
   stats: { years: number; sold: string; clients: string; agents: number };
   rates: Record<string, number>;
   home: {

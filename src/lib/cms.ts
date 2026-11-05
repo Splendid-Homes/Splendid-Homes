@@ -193,6 +193,7 @@ async function loadContent(): Promise<Content> {
       tiktok: s.socials?.tiktok ?? '', facebook: s.socials?.facebook ?? '',
     },
     googleBusinessProfile: s.googleBusinessProfile ?? '',
+    showFigures: s.showFigures === true,
     stats: { years: s.stats.years, sold: s.stats.sold, clients: s.stats.clients, agents: s.stats.agents },
     rates: Object.fromEntries([['AED', 1], ...(s.rates ?? []).map(r => [r.code, r.rate])]),
     home: {

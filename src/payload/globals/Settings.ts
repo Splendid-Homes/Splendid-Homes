@@ -37,6 +37,7 @@ export const Settings: GlobalConfig = {
             { type: 'row', fields: [{ name: 'hours', label: 'Office hours', type: 'text', required: true }, { name: 'lat', label: 'Office latitude', type: 'number', required: true }, { name: 'lng', label: 'Office longitude', type: 'number', required: true }] },
             { name: 'googleBusinessProfile', label: 'Google Business Profile URL', type: 'text' },
             { name: 'socials', type: 'group', fields: [{ type: 'row', fields: ['instagram', 'linkedin', 'youtube', 'tiktok', 'facebook'].map(n => ({ name: n, type: 'text' as const })) }] },
+            { name: 'showFigures', label: 'Show headline figures on the website', type: 'checkbox', defaultValue: false, admin: { description: 'Ratings, review counts, happy clients, property sold, years in Dubai and number of agents. Leave off until the figures are real.' } },
             { name: 'stats', label: 'Key numbers', type: 'group', fields: [{ type: 'row', fields: [
               { name: 'years', label: 'Years in Dubai', type: 'number', required: true },
               { name: 'sold', label: 'Property sold', type: 'text', required: true },

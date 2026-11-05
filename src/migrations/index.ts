@@ -35,6 +35,7 @@ import * as migration_20261030_190444_saved_buttons from './20261030_190444_save
 import * as migration_20261030_191147_legal_pages from './20261030_191147_legal_pages';
 import * as migration_20261030_192227_menus_seo from './20261030_192227_menus_seo';
 import * as migration_20261104_100013_admin_features from './20261104_100013_admin_features';
+import * as migration_20261105_190917_figures_agents_soon from './20261105_190917_figures_agents_soon';
 
 export const migrations = [
   {
@@ -220,6 +221,11 @@ export const migrations = [
   {
     up: migration_20261104_100013_admin_features.up,
     down: migration_20261104_100013_admin_features.down,
-    name: '20261104_100013_admin_features'
+    name: '20261104_100013_admin_features',
+  },
+  {
+    up: migration_20261105_190917_figures_agents_soon.up,
+    down: migration_20261105_190917_figures_agents_soon.down,
+    name: '20261105_190917_figures_agents_soon'
   },
 ];
