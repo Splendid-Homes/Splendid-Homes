@@ -16,6 +16,7 @@
   ],
   "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "splendid-homes" }],
   "images": { "binding": "IMAGES" },
+  "version_metadata": { "binding": "CF_VERSION" },
   "workers_dev": true,
   "routes": [{ "pattern": "splendid-homes.com", "custom_domain": true }, { "pattern": "www.splendid-homes.com", "custom_domain": true }]
 }

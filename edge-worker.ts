@@ -13,7 +13,7 @@ const KEEP_SECONDS = 7 * 24 * 3600;
 const TRACKING = /^(utm_.+|gclid|fbclid|msclkid|ttclid)$/i;
 const SKIP = /^\/(admin|api|next|_next|cdn-cgi)(\/|$)/;
 
-function cacheKey(request) {
+function cacheKey(request, env) {
   const url = new URL(request.url);
   if (request.method !== 'GET' || SKIP.test(url.pathname)) return null;
   if (/(^|;\s*)payload-token=/.test(request.headers.get('cookie') ?? '')) return null;
@@ -22,6 +22,8 @@ function cacheKey(request) {
   for (const name of [...url.searchParams.keys()]) if (TRACKING.test(name)) url.searchParams.delete(name);
   url.searchParams.sort();
   url.searchParams.set('__edge', rsc ? 'data' : 'page');
+  // Pages saved by an earlier deploy point at code that no longer exists, so each version keeps its own.
+  url.searchParams.set('__v', env.CF_VERSION?.id ?? '');
   return new Request(url.toString());
 }
 
@@ -48,7 +50,7 @@ function toVisitor(response, state) {
 
 export default {
   async fetch(request, env, ctx) {
-    const key = cacheKey(request);
+    const key = cacheKey(request, env);
     if (!key) return (await app()).fetch(request, env, ctx);
     const hit = await caches.default.match(key);
     if (hit) {
