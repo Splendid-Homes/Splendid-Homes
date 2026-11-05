@@ -50,7 +50,7 @@ export async function deliverLead(payload: Payload, id: number | string) {
     try {
       await appendLeadRow([
         new Date(lead.createdAt).toLocaleString('en-GB', { timeZone: 'Asia/Dubai' }), label, lead.name, lead.phone ?? '', lead.email ?? '',
-        lead.subject ?? '', lead.sourcePage ?? '', agent?.name ?? '',
+        lead.subject ?? '', lead.sourcePage ?? '', agent?.name ?? '', lead.message ?? '', lead.source ?? '',
       ]);
       delivery.sheetsSent = true;
     } catch (err) {
