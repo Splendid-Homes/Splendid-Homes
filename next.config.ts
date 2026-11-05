@@ -4,8 +4,6 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   // Don't advertise the stack (Payload would otherwise add "X-Powered-By: Next.js, Payload").
   poweredByHeader: false,
-  cacheComponents: true,
-  partialPrefetching: true,
   experimental: {
     // Tailwind CSS is small (~13 KB gzipped): inlining it removes the render-blocking
     // stylesheet round trip, which sets FCP/LCP for first-time mobile visitors.
@@ -20,6 +18,7 @@ const nextConfig: NextConfig = {
     ...(process.env.CLOUDFLARE_REMOTE_BINDINGS === 'true' ? {} : { cpus: 1 }),
   },
   turbopack: {
+    ...(process.env.CF_WORKER_BUILD === 'true' ? { resolveAlias: { 'drizzle-kit/api': './src/lib/drizzle-kit-stub.ts' } } : {}),
     rules: {
       // Only the site stylesheet goes through Tailwind (not Payload's admin CSS).
       'globals.css': {
@@ -34,6 +33,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [{ protocol: 'https', hostname: 'images.unsplash.com' }],
     localPatterns: [{ pathname: '/api/media/file/**' }, { pathname: '/**' }],
     formats: ['image/avif', 'image/webp'],
+    // Temporary preview over a home connection: browsers fetch photos directly instead of through this machine.
+    unoptimized: process.env.PREVIEW_DIRECT_IMAGES === 'true',
   },
   // Packages with Cloudflare Workers (workerd) specific code (OpenNext guidance, Payload template).
   serverExternalPackages: ['jose', 'pg-cloudflare'],

@@ -36,6 +36,10 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { themeColor: '#1E4D34' };
 
+// Public pages render per request from the cached content snapshot (src/lib/cms.ts). Saved static pages
+// cannot be used: rebuilding one hangs on Cloudflare Workers, which took pages down once they expired.
+export const dynamic = 'force-dynamic';
+
 // Runs before first paint: allow entrance animations only when JS runs and the
 // visitor has not asked for reduced motion. Without it, everything is simply visible.
 // The first page view of a session also gets the intro curtain (`html.intro`).

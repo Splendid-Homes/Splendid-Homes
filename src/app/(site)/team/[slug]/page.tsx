@@ -15,10 +15,6 @@ import { pageMetadata } from '@/lib/seo';
 import { telHref, waHref } from '@/lib/site';
 import { data } from '@/lib/cms';
 
-// Pages added in the CMS after a build (slugs not in generateStaticParams) render on their first visit,
-// then are cached. A blocking first render keeps real 404s for unknown slugs (instead of a streamed shell).
-export const instant = false;
-
 const bySlug = async (slug: string) => (await data()).agentBySlug(slug);
 
 export async function generateStaticParams() {

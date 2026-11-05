@@ -4,13 +4,13 @@ import type { CollectionAfterChangeHook, CollectionAfterDeleteHook, GlobalAfterC
 export const CONTENT_TAG = 'content';
 
 /**
- * Marks cached public pages stale after an edit. Uses Next's revalidateTag with the "max"
- * profile (stale-while-revalidate). Outside a Next request (seed script, CLI) it is a no-op.
+ * Expires cached public pages after an edit, so the next visit renders fresh content instead of waiting on
+ * a background refresh. Outside a Next request (seed script, CLI) it is a no-op.
  */
 async function revalidateContent() {
   try {
     const { revalidateTag } = await import('next/cache');
-    revalidateTag(CONTENT_TAG, 'max');
+    revalidateTag(CONTENT_TAG, { expire: 0 });
   } catch {
     /* not running inside Next (e.g. `payload run`) */
   }

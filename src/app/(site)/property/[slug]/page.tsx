@@ -29,10 +29,6 @@ import { propertyFacts } from '@/lib/propertyFacts';
 import { fillFees } from '@/payload/feeDefaults';
 import { fillProperty } from '@/payload/propertyDefaults';
 
-// Pages added in the CMS after a build (slugs not in generateStaticParams) render on their first visit,
-// then are cached. A blocking first render keeps real 404s for unknown slugs (instead of a streamed shell).
-export const instant = false;
-
 const bySlug = async (slug: string) => (await data()).propertyBySlug(slug);
 
 /** Every published listing is prerendered; unknown slugs 404. */

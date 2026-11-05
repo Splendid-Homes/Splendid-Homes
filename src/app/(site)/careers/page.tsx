@@ -14,7 +14,6 @@ export async function generateMetadata() {
   });
 }
 
-
 /**
  * Open roles. JobPosting schema is deliberately left out until each role has a real posting
  * date, closing date and salary range (Google for Jobs requirements); add them in the CMS.

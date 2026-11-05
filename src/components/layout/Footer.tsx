@@ -20,12 +20,6 @@ function ways(s: { whatsapp: string; phone: string; menus: { ways: { title: stri
   });
 }
 
-/** Cached so the static shell can prerender (Cache Components treats `new Date()` as non-deterministic). */
-async function CopyrightYear() {
-  'use cache';
-  return <>{new Date().getFullYear()}</>;
-}
-
 export async function Footer() {
   const { site: SITE, c: { agents } } = await data();
   const SOCIAL: [IconName, string, string][] = [
@@ -86,7 +80,7 @@ export async function Footer() {
         </div>
         <div className="wrap flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pb-7 pt-5 text-[0.8rem] text-[#8EA596]">
           <span className="inline-flex items-center gap-2 rounded-full soft-dark-inset px-3 py-1.5 font-semibold text-deep-text">
-            <Icon name="shield" className="size-3.5 text-gold" />RERA ORN {SITE.orn} · © <CopyrightYear /> {SITE.legalName}
+            <Icon name="shield" className="size-3.5 text-gold" />RERA ORN {SITE.orn} · © {new Date().getFullYear()} {SITE.legalName}
           </span>
           <span className="flex items-center gap-4">
             {SITE.legal.pages.filter(p => p.inFooter).map(p => (

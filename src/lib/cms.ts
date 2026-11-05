@@ -1,5 +1,6 @@
 import config from '@payload-config';
-import { cacheLife, cacheTag } from 'next/cache';
+import { unstable_cache } from 'next/cache';
+import { cache } from 'react';
 import { BUDGET_BANDS, FINDER_WANTS, HERO_CARDS, HOME_SECTIONS, LAUNCHES_BLURB, type HomeSectionKey } from '@/payload/homeOptions';
 import { FEE_DEFAULTS, type Fees } from '@/payload/feeDefaults';
 import { CONTACT_WAYS, CTA_WORDS, FOOTER_COLUMNS, MAIN_NAV, MENU_DEFAULTS, MOBILE_EXTRA, MORE_COLUMNS, type MenuText } from '@/payload/menuDefaults';
@@ -72,11 +73,7 @@ const ymd = (iso?: string | null) => (iso ? iso.slice(0, 10) : '');
 const rel = <T extends { id: number | string }>(v: T | number | string | null | undefined) => (v && typeof v === 'object' ? v : null);
 const published = { status: { equals: 'published' } } as const;
 
-export async function getContent(): Promise<Content> {
-  'use cache';
-  cacheTag(CONTENT_TAG);
-  cacheLife('max');
-
+async function loadContent(): Promise<Content> {
   const payload = await getPayload({ config });
   const all = { limit: 0, pagination: false, depth: 1, overrideAccess: true } as const;
   const [props, projs, comms, devs, agents, posts, testi, svcs, jobs, s, hls, lp, fe, pp, op, cp, cl, dp, nf, sp, svp, mp, at, cc, ip, cs, lg, mn, ps] = await Promise.all([
@@ -385,6 +382,9 @@ export async function getContent(): Promise<Content> {
     site,
   };
 }
+
+/** All public content, read once per request and kept until a CMS edit expires CONTENT_TAG. */
+export const getContent = cache(unstable_cache(loadContent, ['content'], { tags: [CONTENT_TAG] }));
 
 /** Content plus the lookup helpers from lib/data, bound to it. */
 export async function data() {

@@ -26,10 +26,6 @@ import { BrochureRequest } from '@/components/forms/RequestForms';
 import { fillFees } from '@/payload/feeDefaults';
 import { fillProject } from '@/payload/offplanDefaults';
 
-// Pages added in the CMS after a build (slugs not in generateStaticParams) render on their first visit,
-// then are cached. A blocking first render keeps real 404s for unknown slugs (instead of a streamed shell).
-export const instant = false;
-
 export async function generateStaticParams() {
   const __d = await data();
   const { liveProjects } = __d;

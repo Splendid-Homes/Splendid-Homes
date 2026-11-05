@@ -15,10 +15,6 @@ import { data } from '@/lib/cms';
 import { fillTokens } from '@/payload/communityDefaults';
 import { FaqBlock } from '@/components/seo/FaqBlock';
 
-// Pages added in the CMS after a build (slugs not in generateStaticParams) render on their first visit,
-// then are cached. A blocking first render keeps real 404s for unknown slugs (instead of a streamed shell).
-export const instant = false;
-
 const bySlug = async (slug: string) => (await data()).developerBySlug(slug);
 
 export async function generateStaticParams() {
