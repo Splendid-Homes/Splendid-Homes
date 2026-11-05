@@ -37,7 +37,7 @@ export const sheetsConfigured = () =>
 /** Appends one row: date/time, lead type, name, phone, email, property or service, source page, assigned agent. */
 export async function appendLeadRow(row: string[]) {
   const token = await accessToken(process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL!, process.env.GOOGLE_SERVICE_ACCOUNT_KEY!);
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEETS_ID}/values/A1:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEETS_ID}/values/A1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`;
   const res = await fetch(url, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
