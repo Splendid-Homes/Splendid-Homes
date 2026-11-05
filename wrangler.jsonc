@@ -14,5 +14,8 @@
     { "binding": "R2", "bucket_name": "splendid-homes-media" },
     { "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "splendid-homes-cache" }
   ],
-  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "splendid-homes" }]
+  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "splendid-homes" }],
+  "images": { "binding": "IMAGES" },
+  "workers_dev": true,
+  "routes": [{ "pattern": "splendid-homes.com", "custom_domain": true }]
 }
