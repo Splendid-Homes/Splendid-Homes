@@ -86,7 +86,7 @@ if (await prepare('properties')) {
     await payload.create({
       collection: 'properties',
       data: {
-        title: p.title, slug: p.slug, ref: p.ref, permit: p.permit, purpose: p.purpose, type: p.type, price: p.price,
+        title: p.title, slug: p.slug, ref: p.ref, permitNo: p.permit, purpose: p.purpose, type: p.type, price: p.price,
         beds: p.beds, baths: p.baths, size: p.size, parking: p.parking, community: commIds.get(p.community) as number, building: p.building,
         developer: devIds.get(p.developer) as number | undefined, furnishing: p.furnishing, completionStatus: p.status, completion: p.completion,
         view: p.view, serviceCharge: p.serviceCharge, desc: p.desc, amenities: p.amenities, images: p.images.map(url => ({ url })),

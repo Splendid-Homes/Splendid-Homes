@@ -3,7 +3,7 @@
  *
  * - Database: one SQL file per run at db/YYYY-MM-DD.sql, which rebuilds every table. The newest KEEP_RUNS are kept.
  * - Uploaded files: copied to media/<same name> when new or changed. A file deleted from the site stays here.
- * - last-run.json records each result. A failed run emails ALERT_TO.
+ * - last-run.json records each result. ALERT_TO gets an email after every run, so silence means it did not run.
  *
  * The bucket holds leads and staff password hashes, so it must stay private.
  */
@@ -93,7 +93,7 @@ async function runBackup(env) {
   return { key, bytes, tables: Object.keys(counts).length, rows: Object.values(counts).reduce((a, b) => a + b, 0), media, runsKept };
 }
 
-async function alert(env, message) {
+async function email(env, subject, text) {
   if (!env.RESEND_API_KEY) return;
   await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -101,8 +101,8 @@ async function alert(env, message) {
     body: JSON.stringify({
       from: env.EMAIL_FROM,
       to: env.ALERT_TO,
-      subject: 'Splendid Homes website: weekly backup failed',
-      text: `The weekly website backup did not complete.\n\nReason: ${message}\n\nThe website itself is not affected. Please ask your developer to check the splendid-homes-backup Worker on Cloudflare.`,
+      subject,
+      text,
     }),
   });
 }
@@ -115,11 +115,14 @@ export default {
         const result = await runBackup(env);
         await env.BACKUP.put('last-run.json', JSON.stringify({ at, ok: true, ...result }, null, 2));
         console.log('backup ok', JSON.stringify(result));
+        await email(env, 'Splendid Homes website: weekly backup completed',
+          `The weekly website backup finished.\n\nDatabase: ${result.tables} tables, ${result.rows} rows, ${(result.bytes / 1048576).toFixed(1)} MB.\nUploaded files: ${result.media.total} in total, ${result.media.copied} new or changed.\nWeekly copies kept: ${result.runsKept}.\n\nNo action is needed. If this email does not arrive on a Monday, please ask your developer to check the splendid-homes-backup Worker on Cloudflare.`);
       } catch (error) {
         const message = String(error?.message ?? error).slice(0, 500);
         console.error('backup failed', message);
         await env.BACKUP.put('last-run.json', JSON.stringify({ at, ok: false, error: message }, null, 2)).catch(() => {});
-        await alert(env, message);
+        await email(env, 'Splendid Homes website: weekly backup failed',
+          `The weekly website backup did not complete.\n\nReason: ${message}\n\nThe website itself is not affected. Please ask your developer to check the splendid-homes-backup Worker on Cloudflare.`);
       }
     })());
   },

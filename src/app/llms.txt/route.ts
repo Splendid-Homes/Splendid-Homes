@@ -11,7 +11,7 @@ export async function GET() {
 > ${SITE.description} Regulated by RERA (ORN ${SITE.orn}). Office: ${SITE.address.full}. Phone: ${SITE.phone}. Email: ${SITE.email}.
 
 ## Properties
-- [Properties for sale in Dubai](${absoluteUrl('/buy')}): apartments, villas, townhouses and penthouses for sale, with prices in AED, DLD permit numbers and agent BRNs.
+- [Properties for sale in Dubai](${absoluteUrl('/buy')}): apartments, villas, townhouses and penthouses for sale, with prices in AED, permit numbers where issued and agent BRNs.
 - [Properties for rent in Dubai](${absoluteUrl('/rent')}): homes to rent, with yearly rents in AED.
 - [Commercial property](${absoluteUrl('/commercial')}): offices for lease and sale.
 - [Off-plan projects](${absoluteUrl('/off-plan')}): new launches with payment plans and handover dates.

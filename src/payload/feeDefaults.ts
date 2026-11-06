@@ -16,6 +16,17 @@ export const FEE_DEFAULTS: Fees = {
   ejariFee: 220, dewaApartment: 2000, dewaVilla: 4000,
 };
 
+/** A property's land department: its own, or Dubai's when none is set. */
+export function propertyAuthority(p: { authority?: string; authorityName?: string }) {
+  const short = p.authority?.trim() || 'DLD';
+  return { short, name: p.authorityName?.trim() || (short === 'DLD' ? 'Dubai Land Department' : short) };
+}
+
+/** Site-wide fees with this property's own transfer and admin fees applied. */
+export function propertyFees(p: { transferFeePct?: number; adminFee?: number }, f: Fees): Fees {
+  return { ...f, dldPct: p.transferFeePct ?? f.dldPct, dldAdmin: p.adminFee ?? f.dldAdmin };
+}
+
 /**
  * Replaces fee tokens in CMS text, so wording stays right when a fee changes:
  * {dld} → 4%, {agency} → 2%, {rentAgency} → 5%, {deposit} → 5%, {depositFurnished} → 10%,

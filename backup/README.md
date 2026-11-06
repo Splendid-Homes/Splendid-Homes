@@ -8,7 +8,7 @@ The `splendid-homes-backup` Worker runs every Monday at 03:00 Dubai time. It sav
 | `media/<name>` | Uploaded photos, videos and files | Until deleted by hand |
 | `last-run.json` | Result of the latest run | Replaced each run |
 
-A failed run emails the address in `ALERT_TO`. The bucket holds leads and staff password hashes, so never make it public.
+Every run emails the address in `ALERT_TO`, whether it worked or failed, so no email on a Monday means it did not run. The bucket holds leads and staff password hashes, so never make it public.
 
 ## Deploy
 

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Property } from '@/data/types';
 import { num } from '@/lib/data';
-import type { Fees } from '@/payload/feeDefaults';
+import { propertyAuthority, type Fees } from '@/payload/feeDefaults';
 
 const aed = (n: number) => `AED ${num(Math.round(n))}`;
 
@@ -14,6 +14,7 @@ export function CostBreakdown({ p, fees: f, text }: { p: Property; fees: Fees; t
   const dep = p.furnishing === 'Furnished' ? f.depositFurnishedPct : f.depositPct;
   const rent = p.purpose === 'rent';
   const villa = p.type === 'Villa' || p.type === 'Townhouse';
+  const authority = propertyAuthority(p).short;
   const rows: [string, number, string?][] = rent
     ? [
       ['Annual rent', p.price],
@@ -24,8 +25,8 @@ export function CostBreakdown({ p, fees: f, text }: { p: Property; fees: Fees; t
     ]
     : [
       ['Price', p.price],
-      [`DLD transfer fee (${pct(f.dldPct)})`, p.price * f.dldPct / 100],
-      ['DLD admin fee', f.dldAdmin],
+      ...(f.dldPct > 0 ? [[`${authority} transfer fee (${pct(f.dldPct)})`, p.price * f.dldPct / 100] as [string, number]] : []),
+      ...(f.dldAdmin > 0 ? [[`${authority} admin fee`, f.dldAdmin] as [string, number]] : []),
       ['Trustee office fee (incl. VAT)', (p.price >= f.trusteeThreshold ? f.trusteeHigh : f.trusteeLow) * (1 + VAT)],
       [`Agency fee (${pct(f.buyerAgencyPct)} + VAT)`, p.price * f.buyerAgencyPct / 100 * (1 + VAT)],
     ];

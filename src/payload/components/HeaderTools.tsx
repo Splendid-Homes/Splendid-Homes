@@ -15,7 +15,7 @@ const ago = (iso: string) => {
 /* ---------- Global search ---------- */
 const SOURCES: { slug: string; label: string; title: string; sub?: string; fields: string[] }[] = [
   { slug: 'leads', label: 'Leads', title: 'name', sub: 'subject', fields: ['name', 'email', 'phone', 'subject'] },
-  { slug: 'properties', label: 'Listings', title: 'title', sub: 'ref', fields: ['title', 'ref', 'building', 'permit'] },
+  { slug: 'properties', label: 'Listings', title: 'title', sub: 'ref', fields: ['title', 'ref', 'building', 'permitNo'] },
   { slug: 'projects', label: 'Off-plan projects', title: 'name', fields: ['name'] },
   { slug: 'communities', label: 'Communities', title: 'name', fields: ['name'] },
   { slug: 'developers', label: 'Developers', title: 'name', fields: ['name'] },

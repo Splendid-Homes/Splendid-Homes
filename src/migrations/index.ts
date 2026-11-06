@@ -36,6 +36,8 @@ import * as migration_20261030_191147_legal_pages from './20261030_191147_legal_
 import * as migration_20261030_192227_menus_seo from './20261030_192227_menus_seo';
 import * as migration_20261104_100013_admin_features from './20261104_100013_admin_features';
 import * as migration_20261105_190917_figures_agents_soon from './20261105_190917_figures_agents_soon';
+import * as migration_20261106_180454_property_fees_add from './20261106_180454_property_fees_add';
+import * as migration_20261106_180457_property_permit_drop from './20261106_180457_property_permit_drop';
 
 export const migrations = [
   {
@@ -226,6 +228,16 @@ export const migrations = [
   {
     up: migration_20261105_190917_figures_agents_soon.up,
     down: migration_20261105_190917_figures_agents_soon.down,
-    name: '20261105_190917_figures_agents_soon'
+    name: '20261105_190917_figures_agents_soon',
+  },
+  {
+    up: migration_20261106_180454_property_fees_add.up,
+    down: migration_20261106_180454_property_fees_add.down,
+    name: '20261106_180454_property_fees_add',
+  },
+  {
+    up: migration_20261106_180457_property_permit_drop.up,
+    down: migration_20261106_180457_property_permit_drop.down,
+    name: '20261106_180457_property_permit_drop'
   },
 ];

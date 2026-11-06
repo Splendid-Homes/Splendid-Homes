@@ -51,7 +51,7 @@ function PropertyBody({ d }: { d: Doc }) {
       {img && <img className="sh-q-img" src={img} alt="" />}
       <p className="sh-q-price">AED {Number.isFinite(price) ? price.toLocaleString('en-US') : '—'}{d.purpose === 'rent' ? ' / year' : ''}</p>
       <Row label="Reference">{String(d.ref ?? '')}</Row>
-      <Row label="DLD permit">{String(d.permit ?? '')}</Row>
+      <Row label={`${String(d.authority || 'DLD')} permit`}>{String(d.permitNo || 'None')}</Row>
       <Row label="For">{d.purpose === 'rent' ? 'Rent' : 'Sale'}</Row>
       <Row label="Type">{String(d.type ?? '')}</Row>
       <Row label="Size">{`${d.beds ?? '—'} beds · ${d.baths ?? '—'} baths · ${Number(d.size ?? 0).toLocaleString('en-US')} sq ft`}</Row>

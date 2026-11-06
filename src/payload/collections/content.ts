@@ -21,7 +21,7 @@ export const Properties: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'ref', 'purpose', 'type', 'price', 'community', 'status', 'featured', 'quickView'],
     components: { beforeListTable: ['/payload/components/StatusPills#StatusPills'] },
-    listSearchableFields: ['title', 'ref', 'building', 'permit'],
+    listSearchableFields: ['title', 'ref', 'building', 'permitNo'],
   },
   access: { read: listingRead, ...editorWrite },
   hooks: contentHooks,
@@ -33,7 +33,21 @@ export const Properties: CollectionConfig = {
       type: 'row',
       fields: [
         { name: 'ref', label: 'Reference', type: 'text', required: true, unique: true, admin: { placeholder: 'SH-S-1021' } },
-        { name: 'permit', label: 'DLD permit no.', type: 'text', required: true, admin: { description: 'Trakheesi advertising permit; shown on the page.' } },
+        { name: 'permitNo', label: 'Permit no.', type: 'text', admin: { description: 'Leave empty if this property has no permit: the page then shows no permit details.' } },
+      ],
+    },
+    {
+      type: 'row',
+      fields: [
+        { name: 'authority', label: 'Land department (short)', type: 'text', admin: { placeholder: 'DLD', description: 'For example SLD. Empty means DLD.' } },
+        { name: 'authorityName', label: 'Land department (full name)', type: 'text', admin: { placeholder: 'Dubai Land Department', description: 'Used in sentences on the page.' } },
+      ],
+    },
+    {
+      type: 'row',
+      fields: [
+        { name: 'transferFeePct', label: 'Transfer fee (%)', type: 'number', min: 0, admin: { step: 0.01, description: 'Empty uses the value in Fees & costs. 0 hides this cost.' } },
+        { name: 'adminFee', label: 'Admin fee (AED)', type: 'number', min: 0, admin: { description: 'Empty uses the value in Fees & costs. 0 hides this cost.' } },
       ],
     },
     {

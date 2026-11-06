@@ -26,7 +26,7 @@ import { data } from '@/lib/cms';
 import { amenityIcon } from '@/lib/amenities';
 import { similarHomes } from '@/lib/similar';
 import { propertyFacts } from '@/lib/propertyFacts';
-import { fillFees } from '@/payload/feeDefaults';
+import { fillFees, propertyAuthority, propertyFees } from '@/payload/feeDefaults';
 import { fillProperty } from '@/payload/propertyDefaults';
 
 const bySlug = async (slug: string) => (await data()).propertyBySlug(slug);
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: PageProps<'/property/[slug]'>
   const price = `AED ${num(p.price)}${p.purpose === 'rent' ? '/yr' : ''}`;
   return pageMetadata({
     title: `${p.title}, ${area}`.length <= 52 ? `${p.title}, ${area}` : p.title,
-    description: `${kind(p)[0].toUpperCase()}${kind(p).slice(1)} for ${p.purpose === 'rent' ? 'rent' : 'sale'} in ${p.building}, ${area}: ${num(p.size)} sq ft, ${p.baths} baths, ${price}. Ref ${p.ref}, DLD permit ${p.permit}.`,
+    description: `${kind(p)[0].toUpperCase()}${kind(p).slice(1)} for ${p.purpose === 'rent' ? 'rent' : 'sale'} in ${p.building}, ${area}: ${num(p.size)} sq ft, ${p.baths} baths, ${price}. Ref ${p.ref}${p.permit ? `, ${propertyAuthority(p).short} permit ${p.permit}` : ''}.`,
     path: `/property/${p.slug}`,
     image: p.images[0],
   });
@@ -69,9 +69,10 @@ export default async function PropertyPage({ params }: PageProps<'/property/[slu
   const listHref = rent ? '/rent' : '/buy';
   // Shared wording and options: CMS > Property page. Tokens: {title} {ref} {area} {agent} and fee tokens.
   const PP = __d.site.propertyPage, T = PP.text;
-  const fill = (t: string) => fillFees(fillProperty(t, { title: p.title, ref: p.ref, area, agent: agent.name }), __d.site.fees);
+  const fees = propertyFees(p, __d.site.fees), authority = propertyAuthority(p);
+  const fill = (t: string) => fillFees(fillProperty(t, { title: p.title, ref: p.ref, area, agent: agent.name }), fees);
   const waText = fill(T.waMessage);
-  const faqs = [...(PP.showAutoFaqs ? propertyFaqs(p, c, agent, __d.site.fees) : []), ...PP.extraFaqs.map(x => ({ q: fill(x.q), a: fill(x.a) }))];
+  const faqs = [...(PP.showAutoFaqs ? propertyFaqs(p, c, agent, fees) : []), ...PP.extraFaqs.map(x => ({ q: fill(x.q), a: fill(x.a) }))];
   const similar = PP.similarCount ? similarHomes(p, publishedProperties(), communityBySlug, PP.similarCount) : [];
 
   // Tiles and detail rows chosen in the CMS (Property page > Facts); facts a listing lacks are skipped.
@@ -79,7 +80,7 @@ export default async function PropertyPage({ params }: PageProps<'/property/[slu
   const keyFacts = PP.keyFacts.flatMap(k => (all[k]?.tile ? [[all[k].icon, ...all[k].tile] as [IconName, string, string]] : []));
   const tabs = [
     { id: 'overview', label: T.tabOverview }, { id: 'details', label: T.tabDetails }, { id: 'amenities', label: T.tabAmenities },
-    { id: 'costs', label: T.tabCosts }, { id: 'location', label: T.tabLocation }, { id: 'regulatory', label: T.tabPermit },
+    { id: 'costs', label: T.tabCosts }, { id: 'location', label: T.tabLocation }, { id: 'regulatory', label: p.permit ? T.tabPermit : 'Details' },
     ...(faqs.length ? [{ id: 'property-faq', label: T.tabQa }] : []),
   ];
   const sec = 'scroll-mt-[170px]';
@@ -172,7 +173,7 @@ export default async function PropertyPage({ params }: PageProps<'/property/[slu
                 </ul>
               </section>
 
-              <CostBreakdown p={p} fees={__d.site.fees} text={{
+              <CostBreakdown p={p} fees={fees} text={{
                 title: fill(rent ? T.costsRentTitle : T.costsBuyTitle), note: fill(rent ? T.costsRentNote : T.costsBuyNote), footnote: fill(T.costsFootnote),
               }} />
 
@@ -185,14 +186,14 @@ export default async function PropertyPage({ params }: PageProps<'/property/[slu
               <section id="regulatory" aria-labelledby="regulatory-title" className={`${sec} rounded-[26px] soft-inset p-[clamp(14px,2vw,20px)]`}>
                 <h2 id="regulatory-title" className={`${h2} px-2 pt-1`}>{fill(T.regulatoryTitle)}</h2>
                 <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {[[T.regPermit, p.permit], [T.regRef, p.ref], [T.regBrn, agent.brn], [T.regOrn, SITE.orn]].filter(([, v]) => v).map(([k, v]) => (
+                  {[[authority.short === 'DLD' ? T.regPermit : `${authority.short} Permit No.`, p.permit], [T.regRef, p.ref], [T.regBrn, agent.brn], [T.regOrn, SITE.orn]].filter(([, v]) => v).map(([k, v]) => (
                     <div key={k} className="rounded-[16px] soft-raised-sm px-4 py-3">
                       <dt className="text-[0.72rem] font-extrabold uppercase tracking-[0.06em] text-muted">{k}</dt>
                       <dd className="font-bold tabular-nums">{v}</dd>
                     </div>
                   ))}
                 </dl>
-                <p className="mt-3 flex items-start gap-2 px-2 text-[0.82rem] text-muted"><Icon name="shield" className="mt-0.5 size-4 shrink-0 text-gold" />{fill(T.regulatoryNote)}</p>
+                {p.permit && <p className="mt-3 flex items-start gap-2 px-2 text-[0.82rem] text-muted"><Icon name="shield" className="mt-0.5 size-4 shrink-0 text-gold" />{authority.short === 'DLD' ? fill(T.regulatoryNote) : `Advertised under a ${authority.name} permit.`}</p>}
               </section>
 
               {faqs.length > 0 && <FaqBlock id="property-faq" faqs={faqs} title={fill(T.faqTitle)} className={sec} />}

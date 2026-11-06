@@ -136,7 +136,7 @@ async function loadContent(): Promise<Content> {
       beds: p.beds, baths: p.baths, size: p.size, community: community.slug ?? '', building: p.building,
       furnishing: p.furnishing, status: p.completionStatus, completion: p.completion ?? '', developer: developer?.slug ?? '',
       view: p.view ?? '', parking: p.parking ?? 0, serviceCharge: p.serviceCharge ?? 0, amenities: p.amenities ?? [],
-      images: images(p.images), agent: String(agent.id), permit: p.permit, featured: Boolean(p.featured), published: true,
+      images: images(p.images), agent: String(agent.id), permit: p.permitNo ?? '', authority: p.authority ?? '', authorityName: p.authorityName ?? '', transferFeePct: p.transferFeePct ?? undefined, adminFee: p.adminFee ?? undefined, featured: Boolean(p.featured), published: true,
       video: Boolean(p.videoUrl), tour: Boolean(p.tourUrl), videoUrl: p.videoUrl ?? undefined, tourUrl: p.tourUrl ?? undefined, floorPlan: fileUrl(p.floorPlan, p.floorPlanUrl) || undefined,
       created: ymd(p.listedAt), views: p.views ?? 0, desc: p.desc, seo: p.seo ?? undefined,
     }];

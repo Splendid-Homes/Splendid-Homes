@@ -77,7 +77,7 @@ export function listingJsonLd(p: Property, c: Community | undefined, agent: Agen
     inLanguage: 'en-AE',
     identifier: [
       { '@type': 'PropertyValue', propertyID: 'Reference', value: p.ref },
-      { '@type': 'PropertyValue', propertyID: 'DLD Permit No.', value: p.permit },
+      ...(p.permit ? [{ '@type': 'PropertyValue', propertyID: `${p.authority?.trim() || 'DLD'} Permit No.`, value: p.permit }] : []),
     ],
     mainEntity: place,
     offers: {

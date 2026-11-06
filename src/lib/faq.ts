@@ -2,7 +2,7 @@ import type { Agent, Community, Project, Property } from '@/data/types';
 import { bedsLabel, num } from './data';
 import type { Faq } from './schema';
 import { aOrAn } from './offplan';
-import { FEE_DEFAULTS, type Fees } from '@/payload/feeDefaults';
+import { FEE_DEFAULTS, propertyAuthority, type Fees } from '@/payload/feeDefaults';
 
 /**
  * Designated freehold areas (foreign nationals may own outright) among the communities we list.
@@ -61,7 +61,7 @@ export function propertyFaqs(p: Property, c: Community | undefined, agent: Agent
     });
     faqs.push({
       q: 'What are the costs of buying on top of the price?',
-      a: `Plan for ${f.buyCostsLabel} on top of the price. The main item is the Dubai Land Department transfer fee of ${f.dldPct}% (${aed(p.price * f.dldPct / 100)} here), plus trustee and title-deed registration fees and agency commission, typically ${f.buyerAgencyPct}% plus VAT.`,
+      a: `Plan for ${p.transferFeePct == null && p.adminFee == null ? f.buyCostsLabel : 'additional costs'} on top of the price. ${f.dldPct > 0 ? `The main item is the ${propertyAuthority(p).name} transfer fee of ${f.dldPct}% (${aed(p.price * f.dldPct / 100)} here), plus trustee` : 'These include trustee'} and title-deed registration fees and agency commission, typically ${f.buyerAgencyPct}% plus VAT.`,
     });
   }
 
@@ -70,10 +70,10 @@ export function propertyFaqs(p: Property, c: Community | undefined, agent: Agent
       q: 'How do I book a viewing?',
       a: `Use "Book a viewing" on this page to pick a day and time, or message ${agent.brn ? `${agent.name} (BRN ${agent.brn})` : agent.name} on WhatsApp. Viewings run Monday to Saturday and we confirm by phone.`,
     },
-    {
+    ...(p.permit ? [{
       q: 'Is this listing verified?',
-      a: `Yes. It is advertised under Dubai Land Department permit ${p.permit} with reference ${p.ref}, and handled by ${agent.brn ? `RERA-registered broker ${agent.name} (BRN ${agent.brn})` : agent.name}.`,
-    },
+      a: `Yes. It is advertised under ${propertyAuthority(p).name} permit ${p.permit} with reference ${p.ref}, and handled by ${agent.brn ? `RERA-registered broker ${agent.name} (BRN ${agent.brn})` : agent.name}.`,
+    }] : []),
   );
   return faqs;
 }

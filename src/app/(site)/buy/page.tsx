@@ -7,7 +7,7 @@ export async function generateMetadata() {
   const hero = (await data()).heroCommunity(0);
   return cmsPageMetadata('buy', {
     title: 'Properties for Sale in Dubai',
-    description: 'Villas, apartments, townhouses and penthouses for sale in Dubai with prices in AED, DLD permits and filters by community, type, beds and budget.',
+    description: 'Villas, apartments, townhouses and penthouses for sale in Dubai with prices in AED and filters by community, type, beds and budget.',
     path: '/buy',
     image: hero?.img,
   });

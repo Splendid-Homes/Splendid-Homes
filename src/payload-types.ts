@@ -412,9 +412,25 @@ export interface Property {
   title: string;
   ref: string;
   /**
-   * Trakheesi advertising permit; shown on the page.
+   * Leave empty if this property has no permit: the page then shows no permit details.
    */
-  permit: string;
+  permitNo?: string | null;
+  /**
+   * For example SLD. Empty means DLD.
+   */
+  authority?: string | null;
+  /**
+   * Used in sentences on the page.
+   */
+  authorityName?: string | null;
+  /**
+   * Empty uses the value in Fees & costs. 0 hides this cost.
+   */
+  transferFeePct?: number | null;
+  /**
+   * Empty uses the value in Fees & costs. 0 hides this cost.
+   */
+  adminFee?: number | null;
   purpose: 'buy' | 'rent';
   type: 'Apartment' | 'Villa' | 'Townhouse' | 'Penthouse' | 'Office';
   price: number;
@@ -1347,7 +1363,11 @@ export interface ResumesSelect<T extends boolean = true> {
 export interface PropertiesSelect<T extends boolean = true> {
   title?: T;
   ref?: T;
-  permit?: T;
+  permitNo?: T;
+  authority?: T;
+  authorityName?: T;
+  transferFeePct?: T;
+  adminFee?: T;
   purpose?: T;
   type?: T;
   price?: T;
@@ -1933,6 +1953,9 @@ export interface Setting {
     tiktok?: string | null;
     facebook?: string | null;
   };
+  /**
+   * Ratings, review counts, happy clients, property sold, years in Dubai and number of agents. Leave off until the figures are real.
+   */
   showFigures?: boolean | null;
   stats: {
     years: number;

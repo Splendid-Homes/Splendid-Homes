@@ -48,8 +48,14 @@ export interface Property {
   amenities: string[];
   images: string[];
   agent: string;
-  /** DLD advertising permit number */
+  /** Advertising permit number; empty when the property has none */
   permit: string;
+  /** Land department short name, such as DLD or SLD; empty means DLD */
+  authority?: string;
+  authorityName?: string;
+  /** Transfer fee and admin fee for this property; empty uses the site-wide fees */
+  transferFeePct?: number;
+  adminFee?: number;
   featured: boolean;
   published: boolean;
   video: boolean;

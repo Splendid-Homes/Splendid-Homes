@@ -72,7 +72,7 @@ export function LeadBoardClient({ leads: initial, statuses, types }: { leads: Bo
                       <QuickViewButton collection="leads" id={l.id} label={`Quick view: ${l.name}`} />
                     </div>
                     <div style={{ fontSize: 12, opacity: 0.75, margin: '2px 0 6px' }}>
-                      {typeLabel[l.type] ?? l.type} · {new Date(l.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}{l.agent ? ` · ${l.agent}` : ''}
+                      {typeLabel[l.type] ?? l.type} · {new Date(l.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'Asia/Dubai' })}{l.agent ? ` · ${l.agent}` : ''}
                     </div>
                     {l.subject && <div style={{ fontSize: 13, marginBottom: 8 }}>{l.subject}</div>}
                     <div style={{ display: 'flex', gap: 8, fontSize: 12, flexWrap: 'wrap', marginBottom: 8 }}>

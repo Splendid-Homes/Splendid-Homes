@@ -19,7 +19,7 @@ import { ResultsTop } from './ResultsTop';
 type SP = Promise<Record<string, string | string[] | undefined>>;
 
 const COPY: Record<Purpose, { eyebrow: string; h1: [string, string]; sub: string; img: number; noun: string }> = {
-  buy: { eyebrow: 'For sale', h1: ['Properties for sale ', 'in Dubai'], sub: 'Villas, apartments and penthouses for sale across Dubai, every one advertised under a DLD permit.', img: 0, noun: 'for sale' },
+  buy: { eyebrow: 'For sale', h1: ['Properties for sale ', 'in Dubai'], sub: 'Villas, apartments and penthouses for sale across Dubai.', img: 0, noun: 'for sale' },
   rent: { eyebrow: 'For rent', h1: ['Properties for rent ', 'in Dubai'], sub: 'Homes to rent across Dubai, from studios to beachfront villas, with Ejari paperwork handled for you.', img: 2, noun: 'for rent' },
 };
 
