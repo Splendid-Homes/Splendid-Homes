@@ -38,6 +38,45 @@ function classify(request, env) {
   return { kind: 'page', key: url.toString() };
 }
 
+/**
+ * Keeps listing cards, the newsletter box and the Compare picker inside the screen on phones. The same fix is in
+ * the site's own code; this covers a live site built before it, and can go once a later build is live.
+ */
+const PHONE_FIT = String.raw`@media (max-width:767px){.grid:has(>article.group\/card),.grid:has(>.lg\:w-\[380px\]),ul.grid:has(>li.flex.items-center.gap-3.p-2\.5),.mb-5.grid:has(>fieldset){grid-template-columns:minmax(0,1fr)}article.group\/card,.lg\:w-\[380px\],li.flex.items-center.gap-3.p-2\.5{min-width:0}}`;
+
+/**
+ * The site inlines a large stylesheet, so its first chunk of HTML has no </head> yet and Next.js writes its
+ * old-browser script ahead of <!DOCTYPE html>. That puts every browser in quirks mode. Only browsers without
+ * module support (none the site runs on) would ever load that script, so it is dropped.
+ */
+async function fixDoctype(response) {
+  if (!(response.headers.get('content-type') ?? '').includes('text/html') || !response.body) return response;
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder(), encoder = new TextEncoder();
+  let head = '';
+  while (!head.includes('<!DOCTYPE') && head.length < 8192) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    head += decoder.decode(value, { stream: true });
+  }
+  const fixed = head.replace(/^<script[^>]*noModule[^>]*><\/script>(?=<!DOCTYPE)/i, '');
+  const body = new ReadableStream({
+    start(controller) { controller.enqueue(encoder.encode(fixed)); },
+    async pull(controller) {
+      const { done, value } = await reader.read();
+      if (done) {
+        const rest = decoder.decode();
+        if (rest) controller.enqueue(encoder.encode(rest));
+        controller.close();
+      } else controller.enqueue(encoder.encode(decoder.decode(value, { stream: true })));
+    },
+    cancel(reason) { return reader.cancel(reason); },
+  });
+  const out = new Response(body, response);
+  out.headers.delete('content-length');
+  return new HTMLRewriter().on('head', { element(head) { head.append(`<style>${PHONE_FIT}</style>`, { html: true }); } }).transform(out);
+}
+
 async function sharedName(key) {
   const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(key));
   return `edge/${[...new Uint8Array(hash)].map(b => b.toString(16).padStart(2, '0')).join('')}`;
@@ -48,7 +87,7 @@ async function renderAndSave(request, entry, env, ctx, sharedAt = 0) {
   const headers = new Headers(request.headers);
   headers.delete('if-none-match');
   headers.delete('if-modified-since');
-  const response = await env.APP.fetch(new Request(request, { headers }));
+  const response = await fixDoctype(await env.APP.fetch(new Request(request, { headers })));
   if (response.status === 404 || response.status === 410) { // deleted or unpublished: drop the saved copies too
     ctx.waitUntil(caches.default.delete(entry.key));
     ctx.waitUntil(sharedName(entry.key).then(name => env.SHARED.delete(name)).catch(() => {}));
@@ -100,7 +139,7 @@ function toVisitor(response, entry, state) {
 export default {
   async fetch(request, env, ctx) {
     const entry = classify(request, env);
-    if (!entry) return env.APP.fetch(request);
+    if (!entry) return request.method === 'GET' ? fixDoctype(await env.APP.fetch(request)) : env.APP.fetch(request);
     const refresh = sharedAt => ctx.waitUntil(renderAndSave(request.clone(), entry, env, ctx, sharedAt).catch(() => {}));
 
     const hit = await caches.default.match(entry.key);

@@ -135,7 +135,7 @@ export function CompareView({ rows, cfg }: { rows: CompareRow[]; cfg: CompareCon
       <div id="compare-picker" className="scroll-mt-28">
         <h2 className="mb-1.5 text-[clamp(1.3rem,2.2vw,1.7rem)]">{T.pickerTitle}</h2>
         <p className="mb-5 text-ink-2">{fill(T.pickerText)}</p>
-        <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-[auto_1fr_1fr_1fr] lg:items-end">
+        <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-[auto_1fr_1fr_1fr] lg:items-end">
           <fieldset className="inline-flex self-end rounded-[16px] soft-inset p-1.5">
             <legend className="sr-only">Listing type</legend>
             {(['buy', 'rent'] as const).map(v => (
@@ -158,11 +158,11 @@ export function CompareView({ rows, cfg }: { rows: CompareRow[]; cfg: CompareCon
 
         <p className="mb-3 text-[0.85rem] text-muted" aria-live="polite">{fill(matches.length === 1 ? T.matchOne : T.matchMany, matches.length)}</p>
         {matches.length ? (
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {matches.map(r => {
               const on = picked.some(x => x.id === r.id);
               return (
-                <li key={r.id} className={`flex items-center gap-3 rounded-[16px] border p-2.5 transition-colors ${on ? 'border-transparent soft-inset-sm' : 'border-transparent soft-raised-sm'}`}>
+                <li key={r.id} className={`flex min-w-0 items-center gap-3 rounded-[16px] border p-2.5 transition-colors ${on ? 'border-transparent soft-inset-sm' : 'border-transparent soft-raised-sm'}`}>
                   <Image src={r.img} alt="" width={76} height={60} className="h-[60px] w-[76px] shrink-0 rounded-[10px] object-cover" />
                   <div className="min-w-0 flex-1">
                     <Price aed={r.price} perYear={r.purpose === 'rent'} compact className="text-[0.95rem] font-extrabold text-forest" />

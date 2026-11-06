@@ -84,7 +84,7 @@ async function Results({ purpose, searchParams }: { purpose: Purpose; searchPara
       </div>
 
       {list.length ? (
-        <div className="grid gap-[clamp(18px,2.4vw,26px)] md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-[clamp(18px,2.4vw,26px)] md:grid-cols-2 lg:grid-cols-3">
           {/* The first home on page 1 gets a wide featured card when there are enough results. */}
           {list.map((p, i) => <PropertyCard key={p.id} p={p} wide={i === 0 && page === 1 && list.length >= 4} preload={i === 0} />)}
         </div>

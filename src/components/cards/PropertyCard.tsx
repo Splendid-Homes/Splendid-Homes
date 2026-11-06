@@ -31,7 +31,7 @@ export async function PropertyCard({ p, preload, wide, match }: { p: Property; p
   const unit = rent ? `≈ AED ${num(Math.round(p.price / 12))} / mo` : p.size ? `AED ${num(Math.round(p.price / p.size))} / sqft` : '';
   return (
     <article data-cursor="View"
-      className={`group/card relative flex flex-col rounded-[24px] soft-raised p-2.5 transition-[translate] duration-500 ease-[cubic-bezier(.16,1,.3,1)] pointer-fine:hover:-translate-y-1 ${wide ? 'md:col-span-2 md:grid md:grid-cols-[1.25fr_1fr] md:gap-2' : ''}`}>
+      className={`group/card relative flex min-w-0 flex-col rounded-[24px] soft-raised p-2.5 transition-[translate] duration-500 ease-[cubic-bezier(.16,1,.3,1)] pointer-fine:hover:-translate-y-1 ${wide ? 'md:col-span-2 md:grid md:grid-cols-[1.25fr_1fr] md:gap-2' : ''}`}>
       <div className="relative">
         {/* Same name as the detail page's main photo: the photo morphs from card to page (item 16). */}
         <ViewTransition name={`property-photo-${p.id}`} share="morph" default="none">
