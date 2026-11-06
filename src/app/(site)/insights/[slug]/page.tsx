@@ -81,7 +81,7 @@ export default async function ArticlePage({ params }: PageProps<'/insights/[slug
 
       <div className="wrap mt-8 max-w-[1100px]">
         <div className="relative aspect-[16/9] overflow-hidden rounded-[28px] bg-mint max-sm:aspect-[4/3] max-sm:rounded-[20px]">
-          <Image src={p.img} alt={p.title} fill preload sizes="(min-width: 1140px) 1100px, 100vw" className="object-cover" />
+          <Image src={p.img} alt={p.title} fill preload fetchPriority="high" sizes="(min-width: 1140px) 1100px, (min-width: 768px) 100vw, 75vw" className="object-cover" />
         </div>
       </div>
 

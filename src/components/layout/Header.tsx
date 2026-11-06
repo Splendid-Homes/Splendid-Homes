@@ -5,7 +5,7 @@ import { data } from '@/lib/cms';
 import { telHref, waHref } from '@/lib/site';
 import { SavedCount } from '@/components/ui/SaveButton';
 import { CurrencySelect } from './CurrencySelect';
-import { HeaderShell, MobileMenu, NavLink, PageIndicator } from './HeaderClient';
+import { HeaderShell, MobileMenu, MoreMenu, NavLink, PageIndicator } from './HeaderClient';
 import { Suspense } from 'react';
 
 type Col = { title: string; icon: IconName; links: { label: string; href: string }[]; all?: { label: string; href: string } };
@@ -42,7 +42,7 @@ export async function Header() {
           <Suspense fallback={NAV.map(n => <NavLink key={n.href} href={n.href} plain>{n.label}</NavLink>)}>
             {NAV.map(n => <NavLink key={n.href} href={n.href}>{n.label}</NavLink>)}
           </Suspense>
-          <div className="group">
+          <MoreMenu>
             <button type="button" aria-haspopup="true" aria-controls="mega-more"
               className="inline-flex items-center gap-1 rounded-full px-[0.9em] py-[0.55em] text-[0.9rem] font-semibold text-[#C9D8CD] transition-colors hover:text-white group-hover:text-white group-focus-within:text-white">
               {T.moreLabel} <Icon name="chevD" className="size-3.5 transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180" />
@@ -80,7 +80,7 @@ export async function Header() {
                 </div>
               </div>
             </div>
-          </div>
+          </MoreMenu>
         </nav>
 
         <div className="flex shrink-0 items-center gap-2.5 max-sm:gap-1.5">

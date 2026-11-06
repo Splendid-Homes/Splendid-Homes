@@ -33,6 +33,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [{ protocol: 'https', hostname: 'images.unsplash.com' }],
     localPatterns: [{ pathname: '/api/media/file/**' }, { pathname: '/**' }],
     formats: ['image/avif', 'image/webp'],
+    // One setting for every photo: smaller files, and the main photo is what Google times on phones.
+    qualities: [55],
     // Temporary preview over a home connection: browsers fetch photos directly instead of through this machine.
     unoptimized: process.env.PREVIEW_DIRECT_IMAGES === 'true',
   },

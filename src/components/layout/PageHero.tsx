@@ -14,7 +14,7 @@ export function PageHero({ eyebrow, title, sub, img, alt, crumbs, tall, children
     <section className="pt-5">
       <div className="wrap">
         <div className={`relative flex items-end overflow-hidden rounded-[32px] bg-forest max-sm:rounded-[24px] ${tall ? 'min-h-[min(520px,72svh)]' : 'min-h-[340px]'}`}>
-          <Image src={img} alt={alt} fill preload sizes="(min-width: 1240px) 1240px, 100vw" className="object-cover" />
+          <Image src={img} alt={alt} fill preload fetchPriority="high" sizes="(min-width: 1240px) 1240px, (min-width: 768px) 100vw, 75vw" className="object-cover" />
           <span aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(90deg,rgba(18,48,32,.94)_0%,rgba(18,48,32,.7)_45%,rgba(18,48,32,.1))] max-sm:bg-[linear-gradient(0deg,rgba(18,48,32,.95)_10%,rgba(18,48,32,.55)_70%,rgba(18,48,32,.2))]" />
           <div className="relative z-[1] max-w-[720px] p-[clamp(24px,5vw,60px)] text-white">
             <Breadcrumbs tone="light" className="mb-4" items={crumbs} />

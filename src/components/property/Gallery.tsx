@@ -25,8 +25,8 @@ export function Gallery({ images, title, location, preloadFirst = true, morphNam
             className={`group relative overflow-hidden bg-mint ${i === 0
               ? 'aspect-[4/3] rounded-[22px] md:col-span-2 md:row-span-2 md:aspect-auto md:rounded-[28px_10px_10px_28px]'
               : `max-md:hidden rounded-[10px] ${i === 2 ? 'md:rounded-tr-[28px]' : ''} ${i === 4 ? 'md:rounded-br-[28px]' : ''}`}`}>
-            <Image src={src} alt={i === 0 ? `${title} in ${location}` : `${title}, photo ${i + 1}`} fill preload={preloadFirst && i === 0}
-              sizes={i === 0 ? '(min-width: 768px) 50vw, 100vw' : '(min-width: 768px) 25vw, 1px'}
+            <Image src={src} alt={i === 0 ? `${title} in ${location}` : `${title}, photo ${i + 1}`} fill preload={preloadFirst && i === 0} fetchPriority={preloadFirst && i === 0 ? 'high' : undefined}
+              sizes={i === 0 ? '(min-width: 768px) 50vw, 80vw' : '(min-width: 768px) 25vw, 1px'}
               className="object-cover zoom-slow group-hover:scale-[1.04]" />
           </GalleryButton>
         );

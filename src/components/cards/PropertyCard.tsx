@@ -36,7 +36,7 @@ export async function PropertyCard({ p, preload, wide, match }: { p: Property; p
         {/* Same name as the detail page's main photo: the photo morphs from card to page (item 16). */}
         <ViewTransition name={`property-photo-${p.id}`} share="morph" default="none">
           <Link href={href} className={`relative block overflow-hidden rounded-[17px] bg-mint ${wide ? 'aspect-[16/11] md:aspect-auto md:h-full md:min-h-[300px]' : 'aspect-[16/11]'}`} tabIndex={-1} aria-hidden="true">
-            <Image src={p.images[0]} alt="" fill preload={preload} sizes={wide ? '(min-width: 1024px) 560px, 100vw' : '(min-width: 1240px) 400px, (min-width: 768px) 50vw, 100vw'}
+            <Image src={p.images[0]} alt="" fill preload={preload} fetchPriority={preload ? 'high' : undefined} sizes={wide ? '(min-width: 1024px) 560px, (min-width: 768px) 100vw, 75vw' : '(min-width: 1240px) 400px, (min-width: 768px) 50vw, 75vw'}
               data-reveal-img="" className="object-cover zoom-slow group-hover/card:scale-[1.07]" />
             {p.images[1] && (
               // Second photo wipes up on hover. Hidden (so never fetched) on touch screens.

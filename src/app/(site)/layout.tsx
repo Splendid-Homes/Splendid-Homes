@@ -21,8 +21,8 @@ import './globals.css';
 import { Suspense } from 'react';
 
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope', display: 'optional' }); // optional: no font-swap layout shift (CLS 0)
-const fraunces = Fraunces({ subsets: ['latin'], variable: '--font-fraunces', display: 'optional', style: ['italic'], weight: ['500'] });
-const cormorant = Cormorant_Garamond({ subsets: ['latin'], variable: '--font-cormorant', display: 'swap', weight: ['600'] });
+const fraunces = Fraunces({ subsets: ['latin'], variable: '--font-fraunces', display: 'swap', preload: false, style: ['italic'], weight: ['500'] }); // accent words only: must not delay the page
+const cormorant = Cormorant_Garamond({ subsets: ['latin'], variable: '--font-cormorant', display: 'swap', preload: false, weight: ['600'] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

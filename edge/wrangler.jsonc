@@ -1,0 +1,10 @@
+{
+  // Small front Worker (see worker.js). Deploy after the site, with APP_BUILD set to that build's id.
+  "name": "splendid-homes-edge",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-01",
+  "services": [{ "binding": "APP", "service": "splendid-homes" }],
+  "r2_buckets": [{ "binding": "SHARED", "bucket_name": "splendid-homes-cache" }],
+  "workers_dev": true,
+  "routes": [{ "pattern": "splendid-homes.com", "custom_domain": true }, { "pattern": "www.splendid-homes.com", "custom_domain": true }]
+}

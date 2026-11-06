@@ -298,6 +298,10 @@ html.cursor-label [data-cursor], html.cursor-label [data-cursor] * { cursor: non
 @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
   .grain-live::before { inset: -60px; animation: sh-grain 1.2s steps(6) infinite; will-change: transform; }
 }
+@media (max-width: 767px) {
+  .grain::before { display: none; }
+  .intro .intro-curtain { display: none; } /* it hid the first view of the page for 1.5 s on phones */
+}
 @keyframes sh-grain {
   0% { transform: translate(0, 0); } 20% { transform: translate(-28px, 18px); } 40% { transform: translate(22px, -30px); }
   60% { transform: translate(-16px, -12px); } 80% { transform: translate(30px, 24px); } 100% { transform: translate(0, 0); }
@@ -444,3 +448,6 @@ main section.bg-mist[data-drift-on]::after, .drift-dark[data-drift-on]::after { 
     radial-gradient(20% 24% at 60% 44%, rgba(255, 255, 255, 0.8), transparent 70%);
   animation: sh-drift 36s ease-in-out infinite alternate; will-change: transform; }
 @media (prefers-reduced-motion: reduce) { .page-drift { animation: none; } }
+
+/* Header "More": stays shut after a link is chosen, even with the pointer still over it. */
+.more-closed #mega-more { visibility: hidden !important; opacity: 0 !important; pointer-events: none; }

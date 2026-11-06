@@ -132,3 +132,30 @@ export function MobileMenu() {
     </>
   );
 }
+
+/** "More" opens on hover or focus (CSS). Choosing a link closes it until the pointer leaves its area or focus returns. */
+export function MoreMenu({ children }: { children: React.ReactNode }) {
+  const [closed, setClosed] = useState(false);
+  useEffect(() => {
+    if (!closed) return;
+    // The hidden panel keeps its place: only a pointer outside that area may open it again.
+    const check = (e: PointerEvent) => {
+      const r = document.getElementById('mega-more')?.getBoundingClientRect();
+      if (!r || e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) setClosed(false);
+    };
+    window.addEventListener('pointermove', check);
+    window.addEventListener('pointerdown', check);
+    return () => { window.removeEventListener('pointermove', check); window.removeEventListener('pointerdown', check); };
+  }, [closed]);
+  return (
+    <div className={`group ${closed ? 'more-closed' : ''}`}
+      onClick={e => {
+        if (!(e.target as Element).closest('#mega-more a')) return;
+        setClosed(true);
+        (document.activeElement as HTMLElement | null)?.blur();
+      }}
+      onFocus={() => setClosed(false)}>
+      {children}
+    </div>
+  );
+}

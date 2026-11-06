@@ -66,7 +66,7 @@ export async function Hero() {
             <div data-hero-parallax className="absolute -inset-y-[5%] inset-x-0">
               <Image
                 src={home.heroImage} alt="Burj Al Arab on the Dubai coastline" fill preload fetchPriority="high"
-                sizes="(min-width: 1024px) 48vw, 100vw" className="object-cover"
+                sizes="(min-width: 1024px) 48vw, (min-width: 768px) 100vw, 75vw" className="object-cover"
               />
               {home.heroVideo && <HeroVideo src={home.heroVideo} />}
             </div>
