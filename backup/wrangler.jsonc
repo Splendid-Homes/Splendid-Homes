@@ -1,0 +1,15 @@
+{
+  // Weekly backup of the live database and uploaded files (see worker.js and README.md).
+  "name": "splendid-homes-backup",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": false,
+  "triggers": { "crons": ["0 23 * * SUN"] }, // Sundays 23:00 UTC, which is Mondays 03:00 in Dubai
+  "d1_databases": [{ "binding": "DB", "database_name": "splendid-homes", "database_id": "fb2654bd-3b29-4a25-9269-981ff0057eb6", "preview_database_id": "00000000-0000-0000-0000-000000000000" }],
+  "r2_buckets": [
+    { "binding": "MEDIA", "bucket_name": "splendid-homes-media" },
+    { "binding": "BACKUP", "bucket_name": "splendid-homes-backups" }
+  ],
+  "vars": { "ALERT_TO": "info@splendid-homes.com" }
+  // Secrets set on Cloudflare: RESEND_API_KEY, EMAIL_FROM
+}
